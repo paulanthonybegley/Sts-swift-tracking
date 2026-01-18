@@ -1,0 +1,33 @@
+{
+    "summary": "transaction returned with status ACCC",
+    "value": {
+        "UETR": "eb3a88b0-3231-41f0-af8e-e5b86012efef",
+        "transaction_status": "ACCC",
+        "transaction_status_description": "Payment credited to beneficiary bank",
+        "transaction_initiation_date_time": "2025-05-23T10:00:40Z",
+        "transaction_last_update_date_time": "2025-05-23T10:05:40Z",
+        "transaction_completion_date_time": "2025-05-23T10:05:40Z",
+        "transaction_routing": [
+            {
+                "from": "BANKFRBICXX",
+                "to": "BANKUSBICXX"
+            },
+            {
+                "from": "BANKUSBICXX",
+                "to": "BANKDEBICXX"
+            },
+            {
+                "from": "BANKDEBICXX",
+                "to": "BANKBEBICXX"
+            }
+        ],
+        "transaction_instructed_amount": {
+            "currency": "USD",
+            "amount": "100000"
+        },
+        "transaction_confirmed_amount": {
+            "currency": "USD",
+            "amount": "99550"
+        }
+    }
+}

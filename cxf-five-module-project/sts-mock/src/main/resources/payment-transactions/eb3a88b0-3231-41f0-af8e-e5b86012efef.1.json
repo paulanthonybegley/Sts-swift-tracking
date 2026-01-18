@@ -1,0 +1,9 @@
+{
+    "uetr": "eb3a88b0-3231-41f0-af8e-e5b86012efef",
+    "status": "PDNG",
+    "from": "BANKA",
+    "to": "BANKB",
+    "amount": 1000.0,
+    "currency": "USD",
+    "timestamp": "2026-01-18T10:00:00Z"
+}

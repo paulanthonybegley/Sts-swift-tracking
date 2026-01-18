@@ -1,0 +1,31 @@
+MODULE main
+VAR
+  state : {PDNG, ACCC, RJCT};
+
+ASSIGN
+  init(state) := PDNG;
+
+  next(state) := case
+    state = PDNG : {PDNG, ACCC, RJCT}; -- Self-loop, or branching to success/failure
+    state = ACCC : ACCC;               -- Terminal state
+    state = RJCT : RJCT;               -- Terminal state
+  esac;
+
+-- CTL Specifications
+
+-- 1. Safety: Once accepted, it stays accepted
+SPEC AG (state = ACCC -> AX state = ACCC)
+
+-- 2. Safety: Once rejected, it stays rejected
+SPEC AG (state = RJCT -> AX state = RJCT)
+
+-- 3. Reachability: It is possible to reach Accepted state
+SPEC EF (state = ACCC)
+
+-- 4. Reachability: It is possible to reach Rejected state
+SPEC EF (state = RJCT)
+
+-- 5. Liveness: From Pending, we can always eventually reach a terminal state 
+-- (Note: 'AF' would mean we MUST reach it, but due to PDNG self-loop, strictly speaking we might stay in PDNG forever if we choose to. 
+-- However, we can assert that a path exists to a terminal state)
+SPEC EF (state = ACCC | state = RJCT)

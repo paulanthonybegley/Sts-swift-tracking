@@ -1,0 +1,4 @@
+@startuml
+title Payment Flow
+"BANKA" -> "BANKB": Payment Update (PDNG)
+@enduml
