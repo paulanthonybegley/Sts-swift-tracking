@@ -55,8 +55,9 @@
                             <configOptions>
                                 <useJakartaEe>true</useJakartaEe>
                                 <interfaceOnly>true</interfaceOnly>
-                                <library>spring-boot</library> <!-- Just for POJO style, no actual boot dep needed if we exclude validation if desired, but spring-boot lib gives good POJOs -->
+                                <library>spring-boot</library>
                                 <useBeanValidation>false</useBeanValidation>
+                                <modelNameMappings>PaymentTransaction166=Transaction,TransactionRouting1=TransactionRouting</modelNameMappings>
                             </configOptions>
                         </configuration>
                     </execution>

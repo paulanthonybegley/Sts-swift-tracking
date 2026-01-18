@@ -1,9 +1,9 @@
 package com.example.sts.job.processor;
 
-import com.example.sts.model.Transaction;
+import com.example.sts.model.PaymentTransaction166;
 
 public interface UetrProcessor {
-    void process(Transaction transaction);
+    void process(PaymentTransaction166 transaction);
 }
 
 // Decorator Implementation
@@ -16,13 +16,13 @@ class LoggingUetrProcessor implements UetrProcessor {
     }
 
     @Override
-    public void process(Transaction transaction) {
-        log.info(">>> BEGIN Processing UETR: {} <<<", transaction.getUetr());
+    public void process(PaymentTransaction166 transaction) {
+        log.info(">>> BEGIN Processing UETR: {} <<<", transaction.getUETR());
         long start = System.currentTimeMillis();
 
         delegate.process(transaction);
 
         long duration = System.currentTimeMillis() - start;
-        log.info("<<< END Processing UETR: {} (Duration: {}ms) <<<", transaction.getUetr(), duration);
+        log.info("<<< END Processing UETR: {} (Duration: {}ms) <<<", transaction.getUETR(), duration);
     }
 }

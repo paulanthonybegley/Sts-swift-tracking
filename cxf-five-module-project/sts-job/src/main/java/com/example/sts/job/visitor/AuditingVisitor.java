@@ -1,6 +1,6 @@
 package com.example.sts.job.visitor;
 
-import com.example.sts.model.Transaction;
+// No Transaction import needed
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,12 +8,30 @@ public class AuditingVisitor implements TransactionVisitor {
     private static final Logger log = LoggerFactory.getLogger(AuditingVisitor.class);
 
     @Override
-    public void visit(Transaction transaction) {
-        log.info("[AUDIT] Processing UETR: {}. Masking PII...", transaction.getUetr());
-        // Simulating PII redaction by creating a log-safe representation
-        String maskedFrom = transaction.getFrom().substring(0, 2) + "****";
-        String maskedTo = transaction.getTo().substring(0, 2) + "****";
-        log.info("[AUDIT] From: {}, To: {}, Amount: {} {}", maskedFrom, maskedTo, transaction.getAmount(),
-                transaction.getCurrency());
+    public void visit(com.example.sts.model.PaymentTransaction166 transaction) {
+        log.info("[AUDIT] Processing UETR: {}. Masking PII...", transaction.getUETR());
+
+        String fromNode = "UNKNOWN";
+        String toNode = "UNKNOWN";
+
+        if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
+            com.example.sts.model.TransactionRouting1 firstHop = transaction.getTransactionRouting().get(0);
+            fromNode = firstHop.getFrom();
+            if (firstHop.getTo() != null) {
+                toNode = firstHop.getTo();
+            }
+        }
+
+        String maskedFrom = fromNode.length() >= 2 ? fromNode.substring(0, 2) + "****" : "****";
+        String maskedTo = toNode.length() >= 2 ? toNode.substring(0, 2) + "****" : "****";
+
+        String amt = "0.0";
+        String curr = "XXX";
+        if (transaction.getTransactionInstructedAmount() != null) {
+            amt = transaction.getTransactionInstructedAmount().getAmount();
+            curr = transaction.getTransactionInstructedAmount().getCurrency();
+        }
+
+        log.info("[AUDIT] From: {}, To: {}, Amount: {} {}", maskedFrom, maskedTo, amt, curr);
     }
 }

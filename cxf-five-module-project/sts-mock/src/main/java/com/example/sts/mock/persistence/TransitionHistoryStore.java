@@ -1,6 +1,6 @@
 package com.example.sts.mock.persistence;
 
-import com.example.sts.model.Transaction;
+import com.example.sts.model.PaymentTransaction166;
 import com.example.sts.model.TransactionStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -20,7 +20,8 @@ public class TransitionHistoryStore {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void recordTransition(String uetr, TransactionStatus from, TransactionStatus to, Transaction data) {
+    public void recordTransition(String uetr, TransactionStatus from, TransactionStatus to,
+            PaymentTransaction166 data) {
         String apiDataJson = null;
         try {
             apiDataJson = objectMapper.writeValueAsString(data);

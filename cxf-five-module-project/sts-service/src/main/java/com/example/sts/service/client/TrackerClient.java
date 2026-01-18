@@ -1,6 +1,6 @@
 package com.example.sts.service.client;
 
-import com.example.sts.model.Transaction;
+// No Transaction import needed
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonXmlBindJsonProvider;
@@ -39,9 +39,10 @@ public class TrackerClient {
         }
     }
 
-    public Transaction getTransaction(String token, String uetr) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
+    public com.example.sts.model.PaymentTransaction166 getTransaction(String token, String uetr) {
+        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+        mapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         JacksonXmlBindJsonProvider provider = new JacksonXmlBindJsonProvider();
         provider.setMapper(mapper);
 
@@ -52,7 +53,7 @@ public class TrackerClient {
                 .get();
 
         if (response.getStatus() == 200) {
-            return response.readEntity(Transaction.class);
+            return response.readEntity(com.example.sts.model.PaymentTransaction166.class);
         } else {
             log.error("Failed to get transaction {} with status: {}", uetr, response.getStatus());
             return null;

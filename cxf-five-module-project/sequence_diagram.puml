@@ -1,4 +1,5 @@
 @startuml
 title Payment Flow
+"BANKFRBICXX" -> "BANKUSBICXX": Payment Update (PDNG)
 "BANKA" -> "BANKB": Payment Update (PDNG)
 @enduml

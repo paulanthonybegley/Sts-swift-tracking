@@ -1,9 +1,29 @@
 {
-    "uetr": "eb3a88b0-3231-41f0-af8e-e5b86012efef",
-    "status": "ACCC",
-    "from": "BANKB",
-    "to": "BANKC",
-    "amount": 1000.0,
-    "currency": "USD",
-    "timestamp": "2026-01-18T10:05:00Z"
+    "summary": "transaction returned with status ACCC",
+    "value": {
+        "UETR": "eb3a88b0-3231-41f0-af8e-e5b86012efeg",
+        "transaction_status": "ACCC",
+        "transaction_status_description": "Payment completed",
+        "transaction_initiation_date_time": "2026-01-18T10:00:00Z",
+        "transaction_last_update_date_time": "2026-01-18T11:00:00Z",
+        "transaction_completion_date_time": "2026-01-18T11:00:00Z",
+        "transaction_routing": [
+            {
+                "from": "BANKA",
+                "to": "BANKB"
+            },
+            {
+                "from": "BANKUSBICXX",
+                "to": "BANKDEBICXX"
+            },
+            {
+                "from": "BANKDEBICXX",
+                "to": "BANKBEBICXX"
+            }
+        ],
+        "transaction_instructed_amount": {
+            "currency": "USD",
+            "amount": "1000"
+        }
+    }
 }

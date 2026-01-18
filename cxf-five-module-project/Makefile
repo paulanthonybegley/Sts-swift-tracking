@@ -34,8 +34,8 @@ run-job:
 	./mvnw exec:java -Dexec.mainClass="com.example.sts.job.JobMain" -pl sts-job
 
 stop-mock:
-	# pkill -f MockServerMain || true
-	@echo "Mock Server stopped (simulated)"
+	pkill -f MockServerMain || true
+	@echo "Mock Server stopped"
 
 run-all: clean-db run-mock run-job stop-mock
 	@echo "All tasks completed."

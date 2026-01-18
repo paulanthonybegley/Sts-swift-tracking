@@ -1,6 +1,6 @@
 package com.example.sts.job.visitor;
 
-import com.example.sts.model.Transaction;
+// No Transaction import needed
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +13,25 @@ public class AsciiDocVisitor implements TransactionVisitor {
     }
 
     @Override
-    public void visit(Transaction transaction) {
+    public void visit(com.example.sts.model.PaymentTransaction166 transaction) {
         try (PrintWriter out = new PrintWriter(new FileWriter(outputPath, true))) {
-            out.println("== Transaction: " + transaction.getUetr());
-            out.println("- *Status:* " + transaction.getStatus());
-            out.println("- *Hop:* " + transaction.getFrom() + " -> " + transaction.getTo());
-            out.println("- *Amount:* " + transaction.getAmount() + " " + transaction.getCurrency());
-            out.println("- *Time:* " + transaction.getTimestamp());
+            out.println("== Transaction: " + transaction.getUETR());
+            out.println("- *Status:* " + transaction.getTransactionStatus());
+
+            String from = "N/A";
+            String to = "N/A";
+            if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
+                com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(0);
+                from = hop.getFrom();
+                to = hop.getTo() != null ? hop.getTo() : "N/A";
+            }
+            out.println("- *Hop:* " + from + " -> " + to);
+
+            if (transaction.getTransactionInstructedAmount() != null) {
+                out.println("- *Amount:* " + transaction.getTransactionInstructedAmount().getAmount() + " "
+                        + transaction.getTransactionInstructedAmount().getCurrency());
+            }
+            out.println("- *Time:* " + transaction.getTransactionInitiationDateTime());
             out.println();
         } catch (IOException e) {
             e.printStackTrace();

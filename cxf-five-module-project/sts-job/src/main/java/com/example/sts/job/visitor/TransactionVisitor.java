@@ -1,7 +1,7 @@
 package com.example.sts.job.visitor;
 
-import com.example.sts.model.Transaction;
+import com.example.sts.model.PaymentTransaction166;
 
 public interface TransactionVisitor {
-    void visit(Transaction transaction);
+    void visit(PaymentTransaction166 transaction);
 }

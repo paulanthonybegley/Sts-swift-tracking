@@ -1,6 +1,6 @@
 package com.example.sts.job.visitor;
 
-import com.example.sts.model.Transaction;
+// No Transaction import needed
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,10 +30,17 @@ public class PlantUMLVisitor implements TransactionVisitor {
     }
 
     @Override
-    public void visit(Transaction transaction) {
+    public void visit(com.example.sts.model.PaymentTransaction166 transaction) {
         try (PrintWriter out = new PrintWriter(new FileWriter(outputPath, true))) {
+            String from = "UNKNOWN";
+            String to = "UNKNOWN";
+            if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
+                com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(0);
+                from = hop.getFrom();
+                to = hop.getTo() != null ? hop.getTo() : "N/A";
+            }
             out.println(String.format("\"%s\" -> \"%s\": Payment Update (%s)",
-                    transaction.getFrom(), transaction.getTo(), transaction.getStatus()));
+                    from, to, transaction.getTransactionStatus()));
         } catch (IOException e) {
             e.printStackTrace();
         }

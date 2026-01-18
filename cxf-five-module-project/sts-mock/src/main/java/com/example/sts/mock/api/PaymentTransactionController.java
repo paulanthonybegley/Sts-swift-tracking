@@ -2,7 +2,7 @@ package com.example.sts.mock.api;
 
 import com.example.sts.mock.logic.TransactionStateMachine;
 import com.example.sts.mock.persistence.TransitionHistoryStore;
-import com.example.sts.model.Transaction;
+import com.example.sts.model.PaymentTransaction166;
 import com.example.sts.model.TransactionStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.*;
@@ -27,7 +27,10 @@ public class PaymentTransactionController {
     private final JdbcTemplate jdbcTemplate;
     private final TransitionHistoryStore historyStore;
     private final TransactionStateMachine stateMachine;
-    private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .findAndRegisterModules()
+            .configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
     // In-memory cache for current state to allow transition checks without
     // re-reading all history
@@ -79,11 +82,26 @@ public class PaymentTransactionController {
             }
 
             try (InputStream is = resource.getInputStream()) {
-                Transaction transaction = objectMapper.readValue(is, Transaction.class);
+                com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(is);
+                com.fasterxml.jackson.databind.JsonNode valueNode = rootNode.has("value") ? rootNode.get("value")
+                        : rootNode;
+
+                com.example.sts.model.PaymentTransaction166 transaction = objectMapper.treeToValue(valueNode,
+                        com.example.sts.model.PaymentTransaction166.class);
+
+                log.info("Deserialized transaction for UETR {}: {}", uetr, transaction);
 
                 // 4. Validate State Transition
                 TransactionStatus currentStatus = lastKnownState.get(uetr);
-                TransactionStatus nextStatus = transaction.getStatus();
+                String statusStr = transaction.getTransactionStatus();
+                TransactionStatus nextStatus = TransactionStatus.fromString(statusStr);
+
+                log.info("UETR {}: currentStatus={}, statusStr={}, nextStatus={}", uetr, currentStatus, statusStr,
+                        nextStatus);
+
+                if (nextStatus == null) {
+                    throw new IllegalArgumentException("Invalid or missing transaction_status: " + statusStr);
+                }
 
                 if (currentStatus != null) {
                     stateMachine.ensureValidTransition(currentStatus, nextStatus);
@@ -99,8 +117,10 @@ public class PaymentTransactionController {
             log.error("Illegal state transition for UETR: {}", uetr, e);
             return Response.status(Response.Status.CONFLICT).entity(e.getMessage()).build();
         } catch (Exception e) {
-            log.error("Error processing transaction for UETR: {}", uetr, e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            log.error("Error processing transaction for UETR: {}: {}", uetr, e.getMessage(), e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Internal Server Error: " + e.getMessage())
+                    .build();
         }
     }
 }

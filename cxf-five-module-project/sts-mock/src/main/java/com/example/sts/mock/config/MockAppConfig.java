@@ -60,8 +60,9 @@ public class MockAppConfig {
         factory.setBus(bus);
         factory.setServiceBeans(Arrays.asList(paymentController, authController));
         factory.setAddress("http://localhost:8080/api");
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
+        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+        mapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         JacksonXmlBindJsonProvider provider = new JacksonXmlBindJsonProvider();
         provider.setMapper(mapper);
         factory.setProvider(provider);

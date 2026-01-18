@@ -1,9 +1,20 @@
 {
-    "uetr": "eb3a88b0-3231-41f0-af8e-e5b86012efef",
-    "status": "PDNG",
-    "from": "BANKA",
-    "to": "BANKB",
-    "amount": 1000.0,
-    "currency": "USD",
-    "timestamp": "2026-01-18T10:00:00Z"
+    "summary": "transaction returned with status PDNG",
+    "value": {
+        "UETR": "eb3a88b0-3231-41f0-af8e-e5b86012efef",
+        "transaction_status": "PDNG",
+        "transaction_status_description": "Payment on hold",
+        "transaction_initiation_date_time": "2025-05-21T09:00:40Z",
+        "transaction_last_update_date_time": "2025-05-22T11:00:40Z",
+        "transaction_routing": [
+            {
+                "from": "BANKFRBICXX",
+                "to": "BANKUSBICXX"
+            }
+        ],
+        "transaction_instructed_amount": {
+            "currency": "JPY",
+            "amount": "1000450"
+        }
+    }
 }

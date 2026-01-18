@@ -5,7 +5,7 @@ import com.example.sts.job.visitor.AsciiDocVisitor;
 import com.example.sts.job.visitor.AuditingVisitor;
 import com.example.sts.job.visitor.PlantUMLVisitor;
 import com.example.sts.job.visitor.TransactionVisitor;
-import com.example.sts.model.Transaction;
+// No Transaction import needed
 import com.example.sts.service.UetrService;
 import com.example.sts.service.client.TrackerClient;
 import com.example.sts.service.config.ServiceAppConfig;
@@ -48,15 +48,15 @@ public class JobMain {
 
             for (String uetr : activeUetrs) {
                 // Fetch update from Mock (Source of Truth)
-                Transaction update = client.getTransaction(token, uetr);
+                com.example.sts.model.PaymentTransaction166 transaction = client.getTransaction(token, uetr);
 
-                if (update != null) {
+                if (transaction != null) {
                     // Apply Service Logic
-                    uetrService.processUpdate(update);
+                    uetrService.processUpdate(transaction);
 
                     // apply Visitors directly
                     for (TransactionVisitor visitor : visitors) {
-                        visitor.visit(update);
+                        visitor.visit(transaction);
                     }
                 }
             }
