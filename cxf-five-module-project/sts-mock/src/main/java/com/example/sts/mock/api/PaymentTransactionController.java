@@ -93,6 +93,18 @@ public class PaymentTransactionController {
 
                 // 4. Validate State Transition
                 TransactionStatus currentStatus = lastKnownState.get(uetr);
+                if (currentStatus == null) {
+                    // Try to load from DB in case of restart
+                    String lastState = jdbcTemplate.query(
+                            "SELECT to_state FROM transition_history WHERE uetr = ? ORDER BY timestamp DESC LIMIT 1",
+                            (rs, rowNum) -> rs.getString("to_state"),
+                            uetr).stream().findFirst().orElse(null);
+                    if (lastState != null) {
+                        currentStatus = TransactionStatus.valueOf(lastState);
+                        lastKnownState.put(uetr, currentStatus);
+                    }
+                }
+
                 String statusStr = transaction.getTransactionStatus();
                 TransactionStatus nextStatus = TransactionStatus.fromString(statusStr);
 

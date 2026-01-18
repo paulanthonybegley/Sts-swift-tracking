@@ -15,10 +15,11 @@ public class AuditingVisitor implements TransactionVisitor {
         String toNode = "UNKNOWN";
 
         if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
-            com.example.sts.model.TransactionRouting1 firstHop = transaction.getTransactionRouting().get(0);
-            fromNode = firstHop.getFrom();
-            if (firstHop.getTo() != null) {
-                toNode = firstHop.getTo();
+            com.example.sts.model.TransactionRouting1 lastHop = transaction.getTransactionRouting()
+                    .get(transaction.getTransactionRouting().size() - 1);
+            fromNode = lastHop.getFrom();
+            if (lastHop.getTo() != null) {
+                toNode = lastHop.getTo();
             }
         }
 

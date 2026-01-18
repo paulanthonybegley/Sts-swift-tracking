@@ -32,15 +32,13 @@ public class UetrService {
     }
 
     private void seedDefaults() {
-        // Seed with a default UETR to start tracking
-        String defaultUetr = "eb3a88b0-3231-41f0-af8e-e5b86012efef";
-        String defaultUetrg = "eb3a88b0-3231-41f0-af8e-e5b86012efeg";
-        // Requirement: For first hop, insert record for FROM with status 3 and an entry
-        // for TO with status 2.
-        repository.insertRecord(defaultUetr, "BANKA", 3); // From
-        repository.insertRecord(defaultUetr, "BANKB", 2); // To (Active)
-        repository.insertRecord(defaultUetrg, "BANKA", 3); // From
-        repository.insertRecord(defaultUetrg, "BANKB", 2); // To (Active)
+        // Seed with the initial "From" BICs as Active (2) to reflect the start of the
+        // simulation
+        String efef = "eb3a88b0-3231-41f0-af8e-e5b86012efef"; // Starts at BANKFRBICXX
+        String efeg = "eb3a88b0-3231-41f0-af8e-e5b86012efeg"; // Starts at BANKA
+
+        repository.insertRecord(efef, "BANKFRBICXX", 2);
+        repository.insertRecord(efeg, "BANKA", 2);
     }
 
     public List<String> loadUetrs() {
@@ -53,7 +51,10 @@ public class UetrService {
 
         String toNode = "UNKNOWN";
         if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
-            com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(0);
+            // Requirement: Extract the CURRENT node from the LAST hop in the routing
+            // history
+            int lastIndex = transaction.getTransactionRouting().size() - 1;
+            com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(lastIndex);
             toNode = hop.getTo() != null ? hop.getTo() : "UNKNOWN";
         }
 

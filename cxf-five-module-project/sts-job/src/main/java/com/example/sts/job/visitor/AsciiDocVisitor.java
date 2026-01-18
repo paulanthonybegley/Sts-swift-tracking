@@ -18,14 +18,14 @@ public class AsciiDocVisitor implements TransactionVisitor {
             out.println("== Transaction: " + transaction.getUETR());
             out.println("- *Status:* " + transaction.getTransactionStatus());
 
-            String from = "N/A";
-            String to = "N/A";
             if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
-                com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(0);
-                from = hop.getFrom();
-                to = hop.getTo() != null ? hop.getTo() : "N/A";
+                int count = 1;
+                for (com.example.sts.model.TransactionRouting1 hop : transaction.getTransactionRouting()) {
+                    String hopTo = hop.getTo() != null ? hop.getTo() : "N/A";
+                    out.println("- *Hop " + count + ":* " + hop.getFrom() + " -> " + hopTo);
+                    count++;
+                }
             }
-            out.println("- *Hop:* " + from + " -> " + to);
 
             if (transaction.getTransactionInstructedAmount() != null) {
                 out.println("- *Amount:* " + transaction.getTransactionInstructedAmount().getAmount() + " "

@@ -1,5 +1,9 @@
 @startuml
 title Payment Flow
-"BANKFRBICXX" -> "BANKUSBICXX": Payment Update (PDNG)
-"BANKA" -> "BANKB": Payment Update (PDNG)
+"BANKFRBICXX" -> "BANKUSBICXX": Payment Update (ACCC)
+"BANKUSBICXX" -> "BANKDEBICXX": Payment Update (ACCC)
+"BANKDEBICXX" -> "BANKBEBICXX": Payment Update (ACCC)
+"BANKA" -> "BANKB": Payment Update (ACCC)
+"BANKB" -> "BANKDEBICXX": Payment Update (ACCC)
+"BANKDEBICXX" -> "BANKBEBICXX": Payment Update (ACCC)
 @enduml

@@ -32,15 +32,15 @@ public class PlantUMLVisitor implements TransactionVisitor {
     @Override
     public void visit(com.example.sts.model.PaymentTransaction166 transaction) {
         try (PrintWriter out = new PrintWriter(new FileWriter(outputPath, true))) {
-            String from = "UNKNOWN";
-            String to = "UNKNOWN";
             if (transaction.getTransactionRouting() != null && !transaction.getTransactionRouting().isEmpty()) {
-                com.example.sts.model.TransactionRouting1 hop = transaction.getTransactionRouting().get(0);
-                from = hop.getFrom();
-                to = hop.getTo() != null ? hop.getTo() : "N/A";
+                for (com.example.sts.model.TransactionRouting1 hop : transaction.getTransactionRouting()) {
+                    String from = hop.getFrom();
+                    String to = hop.getTo() != null ? hop.getTo() : "UNKNOWN"; // Changed N/A to UNKNOWN for consistency
+                                                                               // with requested change
+                    out.println(String.format("\"%s\" -> \"%s\": Payment Update (%s)",
+                            from, to, transaction.getTransactionStatus()));
+                }
             }
-            out.println(String.format("\"%s\" -> \"%s\": Payment Update (%s)",
-                    from, to, transaction.getTransactionStatus()));
         } catch (IOException e) {
             e.printStackTrace();
         }

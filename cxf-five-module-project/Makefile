@@ -37,5 +37,10 @@ stop-mock:
 	pkill -f MockServerMain || true
 	@echo "Mock Server stopped"
 
-run-all: clean-db run-mock run-job stop-mock
+run-all: clean-db run-mock
+	sleep 10
+	$(MAKE) run-job
+	sleep 2
+	$(MAKE) run-job
+	$(MAKE) stop-mock
 	@echo "All tasks completed."

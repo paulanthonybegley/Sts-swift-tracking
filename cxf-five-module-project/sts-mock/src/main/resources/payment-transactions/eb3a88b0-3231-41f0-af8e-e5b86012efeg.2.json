@@ -13,7 +13,7 @@
                 "to": "BANKB"
             },
             {
-                "from": "BANKUSBICXX",
+                "from": "BANKB",
                 "to": "BANKDEBICXX"
             },
             {
