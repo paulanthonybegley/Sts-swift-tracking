@@ -1,5 +1,6 @@
 package com.example.sts.job;
 
+import com.example.sts.job.processor.LoggingUetrProcessor;
 import com.example.sts.job.processor.UetrProcessor;
 import com.example.sts.job.visitor.AsciiDocVisitor;
 import com.example.sts.job.visitor.AuditingVisitor;
@@ -42,7 +43,11 @@ public class JobMain {
 
             List<TransactionVisitor> visitors = Arrays.asList(auditVisitor, docVisitor, umlVisitor);
 
-            // 3. Process each active UETR
+            // 3. Setup Processor with Decorator
+            UetrProcessor baseProcessor = tx -> uetrService.processUpdate(tx);
+            UetrProcessor loggingProcessor = new LoggingUetrProcessor(baseProcessor);
+
+            // 4. Process each active UETR
             List<String> activeUetrs = uetrService.loadUetrs();
             log.info("Found {} active UETRs in local DB", activeUetrs.size());
 
@@ -51,8 +56,8 @@ public class JobMain {
                 com.example.sts.model.PaymentTransaction166 transaction = client.getTransaction(token, uetr);
 
                 if (transaction != null) {
-                    // Apply Service Logic
-                    uetrService.processUpdate(transaction);
+                    // Apply Service Logic via Decorator
+                    loggingProcessor.process(transaction);
 
                     // apply Visitors directly
                     for (TransactionVisitor visitor : visitors) {

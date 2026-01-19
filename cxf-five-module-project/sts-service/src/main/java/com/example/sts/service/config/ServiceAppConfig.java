@@ -1,5 +1,6 @@
 package com.example.sts.service.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,18 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class ServiceAppConfig {
 
+    @Value("${db.driver-class-name}")
+    private String dbDriverClassName;
+
+    @Value("${db.url}")
+    private String dbUrl;
+
+    @Value("${db.username:}")
+    private String dbUsername;
+
+    @Value("${db.password:}")
+    private String dbPassword;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -25,8 +38,14 @@ public class ServiceAppConfig {
     @Bean
     public DataSource serviceDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite:service_uetrs.db");
+        dataSource.setDriverClassName(dbDriverClassName);
+        dataSource.setUrl(dbUrl);
+        if (dbUsername != null && !dbUsername.isEmpty()) {
+            dataSource.setUsername(dbUsername);
+        }
+        if (dbPassword != null && !dbPassword.isEmpty()) {
+            dataSource.setPassword(dbPassword);
+        }
 
         // Ensure schema is created before any other bean uses the dataSource
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();

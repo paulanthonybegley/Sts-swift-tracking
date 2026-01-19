@@ -1,123 +1,5 @@
 == Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
 - *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000.0 USD
-- *Time:* 2026-01-18T10:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000.0 USD
-- *Time:* 2026-01-18T10:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000.0 USD
-- *Time:* 2026-01-18T10:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* null
-- *Hop:* N/A -> N/A
-- *Time:* null
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* null
-- *Hop:* N/A -> N/A
-- *Time:* null
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 1000450 JPY
-- *Time:* 2025-05-21T09:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* PDNG
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* ACCC
-- *Hop:* BANKFRBICXX -> BANKUSBICXX
-- *Amount:* 100000 USD
-- *Time:* 2025-05-23T10:00:40Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
-- *Status:* ACCC
-- *Hop:* BANKA -> BANKB
-- *Amount:* 1000 USD
-- *Time:* 2026-01-18T10:00:00Z
-
-== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
-- *Status:* PDNG
 - *Hop 1:* BANKFRBICXX -> BANKUSBICXX
 - *Amount:* 1000450 JPY
 - *Time:* 2025-05-21T09:00:40Z
@@ -153,6 +35,22 @@
 == Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
 - *Status:* PDNG
 - *Hop 1:* BANKA -> BANKB
+- *Amount:* 1000 USD
+- *Time:* 2026-01-18T10:00:00Z
+
+== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efef
+- *Status:* ACCC
+- *Hop 1:* BANKFRBICXX -> BANKUSBICXX
+- *Hop 2:* BANKUSBICXX -> BANKDEBICXX
+- *Hop 3:* BANKDEBICXX -> BANKBEBICXX
+- *Amount:* 100000 USD
+- *Time:* 2025-05-23T10:00:40Z
+
+== Transaction: eb3a88b0-3231-41f0-af8e-e5b86012efeg
+- *Status:* ACCC
+- *Hop 1:* BANKA -> BANKB
+- *Hop 2:* BANKB -> BANKDEBICXX
+- *Hop 3:* BANKDEBICXX -> BANKBEBICXX
 - *Amount:* 1000 USD
 - *Time:* 2026-01-18T10:00:00Z
 
