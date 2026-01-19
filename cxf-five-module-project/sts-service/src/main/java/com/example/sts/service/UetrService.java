@@ -2,7 +2,7 @@ package com.example.sts.service;
 
 // No Transaction import needed
 import com.example.sts.model.TransactionStatus;
-import com.example.sts.service.persistence.TrackingRepository;
+import com.example.sts.service.persistence.ITrackingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ import java.util.List;
 public class UetrService {
     private static final Logger log = LoggerFactory.getLogger(UetrService.class);
 
-    private final TrackingRepository repository;
+    private final ITrackingRepository repository;
 
-    public UetrService(TrackingRepository repository) {
+    public UetrService(ITrackingRepository repository) {
         this.repository = repository;
     }
 

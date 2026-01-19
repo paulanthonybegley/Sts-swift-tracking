@@ -1,5 +1,8 @@
 package com.example.sts.service.config;
 
+import com.example.sts.service.persistence.ITrackingRepository;
+import com.example.sts.service.persistence.PostgresTrackingRepository;
+import com.example.sts.service.persistence.SqliteTrackingRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -70,5 +73,14 @@ public class ServiceAppConfig {
         populator.setContinueOnError(true);
         initializer.setDatabasePopulator(populator);
         return initializer;
+    }
+
+    @Bean
+    public ITrackingRepository trackingRepository(JdbcTemplate serviceJdbcTemplate) {
+        if (dbDriverClassName.contains("postgresql")) {
+            return new PostgresTrackingRepository(serviceJdbcTemplate);
+        } else {
+            return new SqliteTrackingRepository(serviceJdbcTemplate);
+        }
     }
 }

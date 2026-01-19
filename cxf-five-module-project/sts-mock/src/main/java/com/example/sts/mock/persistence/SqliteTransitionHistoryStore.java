@@ -6,20 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
 
-@Repository
-public class TransitionHistoryStore {
-    private static final Logger log = LoggerFactory.getLogger(TransitionHistoryStore.class);
+public class SqliteTransitionHistoryStore implements ITransitionHistoryStore {
+    private static final Logger log = LoggerFactory.getLogger(SqliteTransitionHistoryStore.class);
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public TransitionHistoryStore(JdbcTemplate jdbcTemplate) {
+    public SqliteTransitionHistoryStore(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public void recordTransition(String uetr, TransactionStatus from, TransactionStatus to,
             PaymentTransaction166 data) {
         String apiDataJson = null;

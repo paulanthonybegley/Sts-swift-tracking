@@ -1,7 +1,7 @@
 package com.example.sts.mock.api;
 
 import com.example.sts.mock.logic.TransactionStateMachine;
-import com.example.sts.mock.persistence.TransitionHistoryStore;
+import com.example.sts.mock.persistence.ITransitionHistoryStore;
 import com.example.sts.model.PaymentTransaction166;
 import com.example.sts.model.TransactionStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,7 @@ public class PaymentTransactionController {
     private static final Logger log = LoggerFactory.getLogger(PaymentTransactionController.class);
 
     private final JdbcTemplate jdbcTemplate;
-    private final TransitionHistoryStore historyStore;
+    private final ITransitionHistoryStore historyStore;
     private final TransactionStateMachine stateMachine;
     private final ObjectMapper objectMapper = new ObjectMapper()
             .findAndRegisterModules()
@@ -37,7 +37,7 @@ public class PaymentTransactionController {
     private final Map<String, TransactionStatus> lastKnownState = new HashMap<>();
 
     public PaymentTransactionController(JdbcTemplate jdbcTemplate,
-            TransitionHistoryStore historyStore,
+            ITransitionHistoryStore historyStore,
             TransactionStateMachine stateMachine) {
         this.jdbcTemplate = jdbcTemplate;
         this.historyStore = historyStore;

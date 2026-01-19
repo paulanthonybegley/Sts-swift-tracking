@@ -2,6 +2,9 @@ package com.example.sts.mock.config;
 
 import com.example.sts.mock.api.AuthenticationController;
 import com.example.sts.mock.api.PaymentTransactionController;
+import com.example.sts.mock.persistence.ITransitionHistoryStore;
+import com.example.sts.mock.persistence.PostgresTransitionHistoryStore;
+import com.example.sts.mock.persistence.SqliteTransitionHistoryStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonXmlBindJsonProvider;
 import org.apache.cxf.Bus;
@@ -157,5 +160,14 @@ public class MockAppConfig {
         populator.setContinueOnError(true);
         initializer.setDatabasePopulator(populator);
         return initializer;
+    }
+
+    @Bean
+    public ITransitionHistoryStore transitionHistoryStore(JdbcTemplate jdbcTemplate) {
+        if (dbDriverClassName.contains("postgresql")) {
+            return new PostgresTransitionHistoryStore(jdbcTemplate);
+        } else {
+            return new SqliteTransitionHistoryStore(jdbcTemplate);
+        }
     }
 }
