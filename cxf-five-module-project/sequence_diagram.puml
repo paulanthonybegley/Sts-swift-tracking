@@ -1,9 +1,15 @@
 @startuml
 title Payment Flow
+== Flow for UETR: eb3a88b0-3231-41f0-af8e-e5b86012efef ==
+group "UETR: eb3a88b0-3231-41f0-af8e-e5b86012efef"
 "BANKFRBICXX" -> "BANKUSBICXX": Payment Update (ACCC)
 "BANKUSBICXX" -> "BANKDEBICXX": Payment Update (ACCC)
 "BANKDEBICXX" -> "BANKBEBICXX": Payment Update (ACCC)
+end
+== Flow for UETR: eb3a88b0-3231-41f0-af8e-e5b86012efeg ==
+group "UETR: eb3a88b0-3231-41f0-af8e-e5b86012efeg"
 "BANKA" -> "BANKB": Payment Update (ACCC)
 "BANKB" -> "BANKDEBICXX": Payment Update (ACCC)
 "BANKDEBICXX" -> "BANKBEBICXX": Payment Update (ACCC)
+end
 @enduml
