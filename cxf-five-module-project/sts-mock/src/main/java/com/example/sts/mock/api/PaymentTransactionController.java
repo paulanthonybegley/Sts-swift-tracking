@@ -101,8 +101,11 @@ public class PaymentTransactionController {
                             uetr).stream().findFirst().orElse(null);
                     if (lastState != null) {
                         currentStatus = TransactionStatus.valueOf(lastState);
-                        lastKnownState.put(uetr, currentStatus);
+                    } else {
+                        // "There is no INIT state. First will be PDNG"
+                        currentStatus = TransactionStatus.PDNG;
                     }
+                    lastKnownState.put(uetr, currentStatus);
                 }
 
                 String statusStr = transaction.getTransactionStatus();
@@ -115,9 +118,9 @@ public class PaymentTransactionController {
                     throw new IllegalArgumentException("Invalid or missing transaction_status: " + statusStr);
                 }
 
-                if (currentStatus != null) {
-                    stateMachine.ensureValidTransition(currentStatus, nextStatus);
-                }
+                // Always validate now, because we always have a currentStatus (defaulting to
+                // PDNG)
+                stateMachine.ensureValidTransition(currentStatus, nextStatus);
 
                 // 5. Audit & Persist
                 historyStore.recordTransition(uetr, currentStatus, nextStatus, transaction);

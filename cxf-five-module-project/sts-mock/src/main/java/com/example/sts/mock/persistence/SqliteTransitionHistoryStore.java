@@ -31,7 +31,7 @@ public class SqliteTransitionHistoryStore implements ITransitionHistoryStore {
         jdbcTemplate.update(
                 "INSERT INTO transition_history (uetr, from_state, to_state, timestamp, api_data) VALUES (?, ?, ?, ?, ?)",
                 uetr,
-                from != null ? from.name() : "INIT",
+                from != null ? from.name() : TransactionStatus.PDNG.name(),
                 to.name(),
                 OffsetDateTime.now().toString(),
                 apiDataJson);
