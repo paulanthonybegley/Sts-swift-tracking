@@ -25,7 +25,7 @@ public class JobMain {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 ServiceAppConfig.class)) {
             UetrService uetrService = context.getBean(UetrService.class);
-            TrackerClient client = new TrackerClient();
+            TrackerClient client = context.getBean(TrackerClient.class);
 
             // 1. Get Authentication
             String token = client.login("admin", "password");

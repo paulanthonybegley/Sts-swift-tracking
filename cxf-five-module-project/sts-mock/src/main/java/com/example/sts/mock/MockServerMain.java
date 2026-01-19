@@ -27,7 +27,10 @@ public class MockServerMain {
             log.error("Failed to initialize database schema", e);
         }
 
-        log.info("Mock STS Server is running at http://localhost:8080/");
+        String protocol = context.getEnvironment().getProperty("server.ssl.enabled", Boolean.class, false) ? "https"
+                : "http";
+        String port = context.getEnvironment().getProperty("server.port", "8080");
+        log.info("Mock STS Server is running at {}://localhost:{}/api", protocol, port);
 
         // Keep main thread alive
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
